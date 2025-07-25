@@ -1,0 +1,46 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.structure.generator.StructureGenerator</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>QuickStructureGenerator</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor url="https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html">
+        MygovMobileTeam
+    </vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    This plugin will help you to generate feature module structure with codes easily and quickly.<br>
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <depends>org.jetbrains.kotlin</depends>
+
+    <!--  &lt;!&ndash; Add this line &ndash;&gt;-->
+    <depends>com.intellij.modules.java</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+
+    </extensions>
+
+    <actions>
+        <action id="QuickStructureGeneratorAction"
+                class="com.structure.generator.structuregenerator.QuickStructureGeneratorAction"
+                text="Generate Feature Structure"
+                icon="com.intellij.java.ui.icons.JavaUIIcons.SpringPromo"
+                description="Generates a module with the right structure">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+        </action>
+    </actions>
+
+</idea-plugin>
