@@ -22,7 +22,7 @@ import com.structure.generator.structuregenerator.ui.FeatureInputDialog
 import java.io.File
 import kotlin.String
 
-class QuickStructureGeneratorAction : AnAction("Generate Feature Structure") {
+class QuickStructureGeneratorAction : AnAction("Falcon Structure Generator") {
 
     override fun actionPerformed(e: AnActionEvent) {
         val dialog = FeatureInputDialog()
