@@ -5,7 +5,7 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>QuickStructureGenerator</name>
+    <name>Falcon Structure Generator</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor url="https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html">
@@ -36,7 +36,7 @@
     <actions>
         <action id="QuickStructureGeneratorAction"
                 class="com.structure.generator.structuregenerator.QuickStructureGeneratorAction"
-                text="Generate Feature Structure"
+                text="Falcon Structure Generator"
                 icon="com.intellij.java.ui.icons.JavaUIIcons.SpringPromo"
                 description="Generates a module with the right structure">
             <add-to-group group-id="NewGroup" anchor="last"/>

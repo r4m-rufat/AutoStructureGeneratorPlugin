@@ -21,3 +21,17 @@ fun File.extractPackage(baseSrcPath: String): String {
         .replace(File.separatorChar, '.')
         .trim('.')
 }
+
+fun String.addPackageAndImport(packageName: PackageName, import: String) : String {
+    val sb = StringBuilder()
+    sb.append(packageName)
+    sb.appendLine()
+    sb.appendLine()
+    sb.append(import)
+
+    sb.appendLine()
+    sb.appendLine()
+
+    sb.append(this)
+    return sb.toString()
+}

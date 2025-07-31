@@ -7,20 +7,14 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.psi.JavaDirectoryService
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
-import com.structure.generator.structuregenerator.common.PackageName
-import com.structure.generator.structuregenerator.common.createFile
-import com.structure.generator.structuregenerator.common.extractPackage
-import com.structure.generator.structuregenerator.common.toPascalCase
-import com.structure.generator.structuregenerator.templates.activityTemplate
-import com.structure.generator.structuregenerator.templates.defaultScreenTemplate
-import com.structure.generator.structuregenerator.templates.lastScreenTemplate
-import com.structure.generator.structuregenerator.templates.navHostStepsTemplate
-import com.structure.generator.structuregenerator.templates.navHostTemplate
-import com.structure.generator.structuregenerator.templates.repositoryTemplate
-import com.structure.generator.structuregenerator.templates.viewModelTemplate
+import com.structure.generator.structuregenerator.common.*
+import com.structure.generator.structuregenerator.generator.JsonToKotlinClassGenerator
+import com.structure.generator.structuregenerator.templates.*
 import com.structure.generator.structuregenerator.ui.FeatureInputDialog
 import java.io.File
-import kotlin.String
+
+typealias ModelName = String
+typealias GeneratedGson = String
 
 class QuickStructureGeneratorAction : AnAction("Falcon Structure Generator") {
 
@@ -55,11 +49,18 @@ class QuickStructureGeneratorAction : AnAction("Falcon Structure Generator") {
             File(baseDir, it).mkdirs()
         }
 
+        val generator = JsonToKotlinClassGenerator()
+        val models = mutableListOf<Pair<ModelName, GeneratedGson>>()
+        dialog.getCollectedJson().forEach {
+            models.add(it.first to generator.generate(it.first, it.second).addPackageAndImport(packageName = "package $clickedPackageName.$createdPackageName.models", import = "import com.google.gson.annotations.SerializedName"))
+        }
+
         generateCoreFiles(
             baseDir = baseDir,
             baseName = baseName,
             screens = screens,
-            fullPackageName = "$clickedPackageName.$createdPackageName"
+            fullPackageName = "$clickedPackageName.$createdPackageName",
+            models = models
         )
 
         val localFileSystem = com.intellij.openapi.vfs.LocalFileSystem.getInstance()
@@ -79,7 +80,8 @@ class QuickStructureGeneratorAction : AnAction("Falcon Structure Generator") {
         baseDir: File,
         baseName: String,
         screens: List<String>,
-        fullPackageName: PackageName
+        fullPackageName: PackageName,
+        models: List<Pair<ModelName, GeneratedGson>>
     ) {
 
         createFile(
@@ -133,6 +135,14 @@ class QuickStructureGeneratorAction : AnAction("Falcon Structure Generator") {
             "${screens.last()}.kt",
             lastScreenTemplate(packageName = fullPackageName, screenName = screens.last(), baseName = baseName)
         )
+
+        models.forEach {
+            createFile(
+                File(baseDir, "models"),
+                "${it.first}.kt",
+                it.second
+            )
+        }
 
     }
 

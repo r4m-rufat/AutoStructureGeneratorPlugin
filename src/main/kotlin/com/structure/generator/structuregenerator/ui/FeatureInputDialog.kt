@@ -94,12 +94,29 @@ class FeatureInputDialog : DialogWrapper(true) {
 
         try {
             val jsonElement = JsonParser.parseString(jsonText)
-            if (!jsonElement.isJsonObject) {
-                showStatusMessage("JSON format is not valid '$className'.", false)
-                return
+
+            val validElement = when {
+                jsonElement.isJsonObject -> jsonElement.asJsonObject
+                jsonElement.isJsonArray -> {
+                    if (jsonElement.asJsonArray.isEmpty) {
+                        showStatusMessage("JSON array is empty.", false)
+                        return
+                    }
+
+                    val first = jsonElement.asJsonArray.first()
+                    if (!first.isJsonObject) {
+                        showStatusMessage("JSON array must contain objects.", false)
+                        return
+                    }
+                    first.asJsonObject
+                }
+                else -> {
+                    showStatusMessage("Unsupported JSON structure.", false)
+                    return
+                }
             }
 
-            validJsonObjects.add(className to jsonElement.asJsonObject)
+            validJsonObjects.add(className to validElement)
             jsonTextArea.text = ""
             classNameField.text = ""
             showStatusMessage("JSON added successfully for class '$className'.", true)
