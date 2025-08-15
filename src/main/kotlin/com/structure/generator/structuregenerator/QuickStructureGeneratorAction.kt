@@ -52,7 +52,7 @@ class QuickStructureGeneratorAction : AnAction("Falcon Structure Generator") {
         val generator = JsonToKotlinClassGenerator()
         val models = mutableListOf<Pair<ModelName, GeneratedGson>>()
         dialog.getCollectedJson().forEach {
-            models.add(it.first to generator.generate(it.first, it.second).addPackageAndImport(packageName = "package $clickedPackageName.$createdPackageName.models", import = "import com.google.gson.annotations.SerializedName"))
+            models.add(it.first to generator.generate(it.first, it.second).addPackageAndImport(packageName = "$clickedPackageName.$createdPackageName.models", import = "import com.google.gson.annotations.SerializedName"))
         }
 
         generateCoreFiles(
