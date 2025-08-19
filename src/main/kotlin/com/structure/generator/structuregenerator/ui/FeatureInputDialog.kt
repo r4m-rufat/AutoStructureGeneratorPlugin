@@ -55,16 +55,22 @@ class FeatureInputDialog : DialogWrapper(true) {
 
         panel.add(createLabeledField("Module Name", moduleNameField))
         panel.add(Box.createVerticalStrut(10))
+
         panel.add(createLabeledField("Base File Name (optional)", baseNameField))
         panel.add(Box.createVerticalStrut(10))
+
         panel.add(createLabeledField("Screens (comma-separated)", screensField))
         panel.add(Box.createVerticalStrut(10))
-        panel.add(createLabeledField("Class Name", classNameField))
-        panel.add(Box.createVerticalStrut(10))
+
         panel.add(createLabeledArea("JSON Input", jsonTextArea))
         panel.add(Box.createVerticalStrut(10))
+
+        panel.add(createLabeledField("Response Name", classNameField))
+        panel.add(Box.createVerticalStrut(10))
+
         panel.add(addButton)
         panel.add(Box.createVerticalStrut(10))
+
         panel.add(statusLabel)
 
         return panel
